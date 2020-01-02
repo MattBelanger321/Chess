@@ -6,9 +6,18 @@ public class Game implements ActionListener,Global {
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
     private Piece[] blacks = new Piece[16]; // BLACK PLAYERS PIECES
     private Square[][] squares = new Square[8][8];
+    private int state;  //HOLDS BOARD STATE
+
+    //POSSIBLE STATES
+    private final int REGUALR_PLAY = 0;
+    private final int WHITE_CHECK = 1;  //WHITE IS IN CHECK
+    private final int BLACK_CHECK = 2;  //BLACK IS IN CHECK
+    private final int STALEMATE = 3;
+    private final int WHITE_WINS = 4;   //BLACK HAS BEEN CHECKMATED
+    private final int BLACK_WINS = 5;   //WHITE HAS BEEN CHECKMATED
 
     public Game(){
-
+        state = 0;
 
         //Makes Board
         createBoard();
@@ -22,9 +31,10 @@ public class Game implements ActionListener,Global {
         main.setLayout(null);   //using no layout managers
         main.setVisible(true);  //making the frame visible
 
+        //Initialize Players
         Player white = new Player(true);
         Player black = new Player(false);
-    }
+    }//Constructor
 
     private void populateSquares(){
         for(int i=0; i<8; i++){
@@ -61,7 +71,6 @@ public class Game implements ActionListener,Global {
     }
 
     private void placePieces(){
-
         //PAWNS
 
         whites[0] = new Pawn("A2",true);
@@ -120,6 +129,13 @@ public class Game implements ActionListener,Global {
 
     public void start() {
         waitOK();
+        for(int i = 0;state<3;i++){
+
+        }
+    }
+
+    public void setState(int newState){
+        state = newState;
     }
 
     private void waitOK(){
