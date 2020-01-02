@@ -3,16 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game implements ActionListener,Global {
-    private JFrame main;
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
     private Piece[] blacks = new Piece[16]; // BLACK PLAYERS PIECES
     private Square[][] squares = new Square[8][8];
 
     public Game(){
 
-        //Create Frame
-        main = new JFrame("Chess");
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Makes Board
         createBoard();
@@ -20,7 +16,8 @@ public class Game implements ActionListener,Global {
         //Makes Sidebar
         createSideBar();
 
-        //Sets Frame Visible
+        //Create Frame
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         main.setSize(1000,640); //width height
         main.setLayout(null);   //using no layout managers
         main.setVisible(true);  //making the frame visible
@@ -32,9 +29,8 @@ public class Game implements ActionListener,Global {
     private void populateSquares(){
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
-                squares[i][j] = new Square(String.format("%c%d",i+65,j+1), ((i + j) % 2) == 0); //Creates Square
+                squares[i][j] = new Square(String.format("%c%d",i+65,j+1), ((i + j) % 2) == 0,i,j); //Creates Square
                 squares[i][j].setBounds(75*i,75*j,75, 75);  //x axis, y axis, width, height
-               // squares[i][j].addActionListener(this);
                 main.add(squares[i][j]);    //adds button to frame
             }
         }

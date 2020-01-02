@@ -1,22 +1,29 @@
-
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Square extends JPanel implements Global{
+public class Square extends JToggleButton implements Global, ActionListener {
     private String name;    //STRING CONTAINING THIS SQUARES COORDINATE (EX G4)
     private boolean isWhite;
     private Piece state = null;
     public static Square active = new Square();
+    private boolean isActive;
 
-    public Square(String name, boolean isWhite){
+    public Square(String name, boolean isWhite,int i , int j){
         this.name = name;
         this.setBackground(isWhite?new Color(255,255,255):new Color(0,0,0));
         this.isWhite = isWhite;
+        setBounds(70*i,70*j,70, 70);  //x axis, y axis, width, height
+
+        //ICONS WILL FILL FULL BUTTON
+        setHorizontalTextPosition(JButton.CENTER);
+        setVerticalTextPosition(JButton.CENTER);
+        setMargin(new Insets(0,0,0,0));
+        isActive = false;
     }
 
-    public Square(){
-    }
+    public Square(){}
 
     public String toString(){
         return name;
@@ -52,6 +59,16 @@ public class Square extends JPanel implements Global{
         }else{
             active = this;
             menu.setText(String.format("YOU DESELECTED %s",toString()));
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        isActive = !isActive;
+        if(isActive){
+            setBackground(new Color(100,150,232));
+        }else{
+            this.setBackground(isWhite?new Color(255,255,255):new Color(0,0,0));
         }
     }
 }
