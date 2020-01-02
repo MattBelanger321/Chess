@@ -2,12 +2,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Game implements ActionListener {
+public class Game implements ActionListener,Global {
     private JFrame main;
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
     private Piece[] blacks = new Piece[16]; // BLACK PLAYERS PIECES
     private Square[][] squares = new Square[8][8];
-    private JTextArea menu;
 
     public Game(){
 
@@ -25,7 +24,9 @@ public class Game implements ActionListener {
         main.setSize(1000,640); //width height
         main.setLayout(null);   //using no layout managers
         main.setVisible(true);  //making the frame visible
-        main.setVisible(true);
+
+        Player white = new Player(true);
+        Player black = new Player(false);
     }
 
     private void populateSquares(){
@@ -33,6 +34,7 @@ public class Game implements ActionListener {
             for(int j=0; j<8; j++){
                 squares[i][j] = new Square(String.format("%c%d",i+65,j+1), ((i + j) % 2) == 0); //Creates Square
                 squares[i][j].setBounds(75*i,75*j,75, 75);  //x axis, y axis, width, height
+               // squares[i][j].addActionListener(this);
                 main.add(squares[i][j]);    //adds button to frame
             }
         }
@@ -51,9 +53,8 @@ public class Game implements ActionListener {
         main.add(ok);
 
         //TEXT BOX
-        menu = new JTextArea();
         menu.setEditable(false);
-        menu.setText("WELCOME TO CHESS");
+        menu.setText("WELCOME TO CHESS\nPRESS OK TO BEGIN");
         menu.setBounds(635,300,300,200);
         main.add(menu);
     }//sidebar
@@ -64,6 +65,7 @@ public class Game implements ActionListener {
     }
 
     private void placePieces(){
+
         //PAWNS
 
         whites[0] = new Pawn("A2",true);
@@ -111,14 +113,24 @@ public class Game implements ActionListener {
         whites[12] = new King("E1",true);
         blacks[12] = new King("E8",false);
 
-        for(int i = 0; i<32; i++){
-
+        for(int i = 0; i<32; i++){  //PLACES PIECES
             if(i%2==0){ //WHITE PIECES
                 squares[i/2 - (i>15?8:0)][6 + (i>15?1:0)].setState(whites[i/2]);
             }else{  //BLACK PIECES
                 squares[i/2 - (i>15?8:0)][1 - (i>15?1:0)].setState(blacks[i/2]);
             }
-
         }
+    }   //placePiece
+
+    public void start() {
+        waitOK();
     }
+
+    private void waitOK(){
+        while(true){
+            if(menu.getText().equals("")){
+                return;
+            }
+        }
+    }//waitOK
 }//class
