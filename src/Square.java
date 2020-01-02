@@ -24,16 +24,19 @@ public class Square extends JPanel{
             add(picLabel);
         }catch(NullPointerException e){
             System.err.println(e);
+            if(piece!=null){
+                JLabel picLabel = new JLabel(piece.name);
+                add(picLabel);
+            }
         }
     }
 
-    
+
     public void setColor(int r,int g,int b){
         this.setBackground(new Color(r,g,b));
     }
 
     public boolean showMoves(){
-        if(state == null){return false;}
-        return true;
+        return state != null;
     }
 }

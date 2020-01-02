@@ -20,8 +20,4 @@ public class Pawn extends Piece{
 
     }
 
-    @Override
-    protected void showMoves() {
-
-    }
 }

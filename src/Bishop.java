@@ -16,8 +16,4 @@ public class Bishop extends Piece {
         }
     }
 
-    @Override
-    protected void showMoves() {
-
-    }
 }
