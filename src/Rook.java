@@ -18,4 +18,8 @@ public class Rook extends Piece{
         }
     }
 
+    @Override
+    protected void showMoves() {
+
+    }
 }

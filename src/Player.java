@@ -9,4 +9,8 @@ public class Player {
         return isWhite?"WHITE PLAYER":"BLACK PLAYER";
     }
 
+    public void makeMove(int state,Square[][] squares){
+
+    }
+
 }

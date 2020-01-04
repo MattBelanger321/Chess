@@ -5,8 +5,8 @@ public abstract class Piece {
     protected BufferedImage icon;
     protected String name;
     protected boolean isWhite;
-
-    //protected abstract void showMoves();
+    protected abstract void showMoves();
+    protected boolean isTemp;
 
     public String toString(){
         return String.format("%s %s", isWhite?"WHITE":"BLACK",name);
@@ -18,6 +18,10 @@ public abstract class Piece {
 
     public String getPosition(){
         return pos;
+    }
+
+    public boolean getColor(){
+        return isWhite;
     }
 
 }

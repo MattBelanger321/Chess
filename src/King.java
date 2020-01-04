@@ -18,4 +18,8 @@ public class King extends Piece{
         }
     }
 
+    @Override
+    protected void showMoves() {
+
+    }
 }

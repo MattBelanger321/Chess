@@ -1,24 +1,17 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game implements ActionListener,Global {
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
     private Piece[] blacks = new Piece[16]; // BLACK PLAYERS PIECES
-    private Square[][] squares = new Square[8][8];
-    private int state;  //HOLDS BOARD STATE
-
-    //POSSIBLE STATES
-    private final int REGUALR_PLAY = 0;
-    private final int WHITE_CHECK = 1;  //WHITE IS IN CHECK
-    private final int BLACK_CHECK = 2;  //BLACK IS IN CHECK
-    private final int STALEMATE = 3;
-    private final int WHITE_WINS = 4;   //BLACK HAS BEEN CHECKMATED
-    private final int BLACK_WINS = 5;   //WHITE HAS BEEN CHECKMATED
+    private Square[][] squares = new Square[8][8]; //GAME BOARD
+    private int state = PRE_GAME;  //HOLDS BOARD STATE
+    private boolean moveMade = false;
+    private Square active = null;
 
     public Game(){
-        state = 0;
-
         //Makes Board
         createBoard();
 
@@ -30,16 +23,53 @@ public class Game implements ActionListener,Global {
         main.setSize(1000,640); //width height
         main.setLayout(null);   //using no layout managers
         main.setVisible(true);  //making the frame visible
-
-        //Initialize Players
-        Player white = new Player(true);
-        Player black = new Player(false);
     }//Constructor
+
+    public void play() {
+        for(int i = 0;state<3;i++){
+            if(i%2==0){
+                menu.setText("WHITE PLAYER'S TURN!\nPLEASE SELECT A PIECE ");
+                setState(WHITE_PLAY);
+                makeMove();
+            }else{
+                menu.setText("BLACK PLAYER'S TURN!\nPLEASE SELECT A PIECE ");
+                setState(BLACK_PLAY);
+                makeMove();
+            }
+            resetBoard();
+        }
+    }
+
+    public void makeMove(){
+        while(!moveMade){
+            menu.setText(menu.getText());
+            if(state == WHITE_PLAY){
+                if(active != null){
+                    if((active.getState() == null) || !active.getState().getColor()){ //NO PIECE FOUND OR COLOR MISMATCH
+                        menu.setText("PLEASE SELECT A VALID PIECE");
+                    }else{
+                        menu.setText("YOU SELECTED A VALID PIECE");
+                    }
+                }
+            }else if(state == BLACK_PLAY){
+                if(active != null){
+                    if((active.getState() == null) || active.getState().getColor()){ //NO PIECE FOUND OR COLOR MISMATCH
+                        menu.setText("PLEASE SELECT A VALID PIECE");
+                    }else{
+                        menu.setText("YOU SELECTED A VALID PIECE");
+                    }
+                }
+            }else{
+                moveMade = true;
+            }
+        }
+        moveMade = false;
+    }
 
     private void populateSquares(){
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
-                squares[i][j] = new Square(String.format("%c%d",i+65,j+1), ((i + j) % 2) == 0,i,j); //Creates Square
+                squares[i][j] = new Square(String.format("%c%d",i+65,j+1), ((i + j) % 2) == 0,i,j,this); //Creates Square
                 squares[i][j].setBounds(75*i,75*j,75, 75);  //x axis, y axis, width, height
                 main.add(squares[i][j]);    //adds button to frame
             }
@@ -64,11 +94,6 @@ public class Game implements ActionListener,Global {
         menu.setBounds(635,300,300,200);
         main.add(menu);
     }//sidebar
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        menu.setText("");
-    }
 
     private void placePieces(){
         //PAWNS
@@ -127,22 +152,53 @@ public class Game implements ActionListener,Global {
         }
     }   //placePiece
 
-    public void start() {
-        waitOK();
-        for(int i = 0;state<3;i++){
-
-        }
-    }
-
     public void setState(int newState){
         state = newState;
     }
 
-    private void waitOK(){
-        while(true){
+    public void waitOK(){
+        while(!menu.getText().equals("")){
             if(menu.getText().equals("")){
                 return;
             }
         }
     }//waitOK
+
+    public int getState(){
+        return state;
+    }
+
+    public void resetBoard(){
+        squares[0][0].deactivate();
+        for(int i = 0;i<8;i++){
+            for(int j = 0;j<8;j++){
+                squares[i][j].setBackground(squares[i][j].isWhite()?new Color(255,255,255):new Color(0,0,0));
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(menu.getText().equals("")){
+            menu.setText("OK");
+        }else{
+            menu.setText("");
+        }
+        resetBoard();
+    }
+
+    public void activate(int i, int j) {
+        if(active != null){
+            deactivate();
+        }
+        active = squares[i][j];
+        System.out.printf("%s is %snull\n",active,active != null?"NOT ":"");
+    }
+
+    public void deactivate() {
+        if(active != null){
+            active.deactivate();
+        }
+        active = null;
+    }
 }//class

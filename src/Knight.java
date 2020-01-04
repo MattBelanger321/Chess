@@ -15,4 +15,9 @@ public class Knight extends Piece {
             System.err.println("KNIGHT ICON NOT FOUND");
         }
     }
+
+    @Override
+    protected void showMoves() {
+
+    }
 }

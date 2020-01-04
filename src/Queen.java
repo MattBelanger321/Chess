@@ -15,4 +15,8 @@ public class Queen extends Piece {
         }
     }
 
+    @Override
+    protected void showMoves() {
+
+    }
 }

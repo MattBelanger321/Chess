@@ -2,15 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
-public class Square extends JToggleButton implements Global, ActionListener {
+public class Square extends JButton implements Global, ActionListener {
     private String name;    //STRING CONTAINING THIS SQUARES COORDINATE (EX G4)
-    private boolean isWhite;
-    private Piece state = null;
-    public static Square active = new Square();
-    private boolean isActive;
+    private boolean isWhite;    //true if this square is white
+    private Piece state = null; //Stores the piece this square has
+    private boolean isActive;   //true if this square is selected
+    private Game game;  // a reference to the game this square is apart of
+    private int i,j; //a reference to the index of this square on a gameboard;
 
-    public Square(String name, boolean isWhite,int i , int j){
+    public Square(String name, boolean isWhite,int i , int j, Game game){
         this.name = name;
         this.setBackground(isWhite?new Color(255,255,255):new Color(0,0,0));
         this.isWhite = isWhite;
@@ -21,9 +23,17 @@ public class Square extends JToggleButton implements Global, ActionListener {
         setVerticalTextPosition(JButton.CENTER);
         setMargin(new Insets(0,0,0,0));
         isActive = false;
+        this.game = game;
+
+        addActionListener(this);
+
+        this.i = i;
+        this.j = j;
     }
 
-    public Square(){}
+    public boolean isWhite(){
+        return isWhite;
+    }
 
     public String toString(){
         return name;
@@ -35,40 +45,39 @@ public class Square extends JToggleButton implements Global, ActionListener {
             JLabel picLabel = new JLabel(new ImageIcon(state.icon));
             add(picLabel);
         }catch(NullPointerException e){
-            System.err.println(e);
             if(piece!=null){
                 JLabel picLabel = new JLabel(piece.name);
                 add(picLabel);
             }
+            state = null;
         }
-    }
-
-
-    public void setColor(int r,int g,int b){
-        this.setBackground(new Color(r,g,b));
     }
 
     public boolean showMoves(){
         return state != null;
     }
 
-    public void setActive(){
-        if(active.equals(this)){
-            active = new Square();
-            menu.setText(String.format("YOU SELECTED %s",toString()));
-        }else{
-            active = this;
-            menu.setText(String.format("YOU DESELECTED %s",toString()));
-        }
+    public Piece getState(){
+        return state;
+    }
+
+    public void activate(){
+        setBackground(new Color(255,255,0));
+    }
+
+    public void deactivate(){
+        setBackground(isWhite?new Color(255,255,255):new Color(0,0,0));
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        isActive = !isActive;
-        if(isActive){
-            setBackground(new Color(100,150,232));
+        if(!isActive){
+            activate();
+            game.activate(i,j);
         }else{
-            this.setBackground(isWhite?new Color(255,255,255):new Color(0,0,0));
+            deactivate();
+            game.deactivate();
         }
+        isActive = !isActive;
     }
 }
