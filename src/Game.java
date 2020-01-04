@@ -192,7 +192,7 @@ public class Game implements ActionListener,Global {
             deactivate();
         }
         active = squares[i][j];
-        System.out.printf("%s is %snull\n",active,active != null?"NOT ":"");
+        menu.setText(menu.getText());
     }
 
     public void deactivate() {
