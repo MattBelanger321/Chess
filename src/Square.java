@@ -10,7 +10,8 @@ public class Square extends JButton implements Global, ActionListener {
     private Piece state = null; //Stores the piece this square has
     private boolean isActive;   //true if this square is selected
     private Game game;  // a reference to the game this square is apart of
-    private int i,j; //a reference to the index of this square on a gameboard;
+    public int i,j; //a reference to the index of this square on a gameboard;
+    private JLabel icon;
 
     public Square(String name, boolean isWhite,int i , int j, Game game){
         this.name = name;
@@ -42,23 +43,32 @@ public class Square extends JButton implements Global, ActionListener {
     public void setState(Piece piece){
         state = piece;
         try{
-            JLabel picLabel = new JLabel(new ImageIcon(state.icon));
-            add(picLabel);
+            icon = new JLabel(new ImageIcon(state.icon));
+            add(icon);
         }catch(NullPointerException e){
             if(piece!=null){
-                JLabel picLabel = new JLabel(piece.name);
-                add(picLabel);
+                icon = new JLabel(piece.name);
+                add(icon);
             }
             state = null;
         }
     }
 
-    public boolean showMoves(){
-        return state != null;
-    }
-
     public Piece getState(){
         return state;
+    }
+
+    public void setColor(int r,int g,int b){
+        setBackground(new Color(r,g,b));
+    }
+
+    public void removeState(){
+        state = null;
+    }
+
+    public void removeIcon(){
+        remove(icon);
+        icon = null;
     }
 
     public void activate(){

@@ -5,11 +5,13 @@ import java.io.IOException;
 public class Rook extends Piece{
     private boolean hasMoved;   //A FLAG USED TO SEE IF CASTLING IS POSSIBLE
 
-    public Rook(String pos, boolean isWhite){
+    public Rook(String pos, boolean isWhite,int i,int j){
         hasMoved = false;
         super.pos = pos;
         super.name = "ROOK";
         super.isWhite = isWhite;
+        super.i = i;
+        super.j = j;
 
         try {
             super.icon = ImageIO.read(new File(String.format("C:\\Users\\mattm\\Desktop\\Java\\Chess\\src\\icons\\%s", isWhite ? "whiteRook.png" : "blackRook.png")));    //Loads Icon
@@ -19,7 +21,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected void showMoves() {
-
+    protected Square[] showMoves(Square[][] squares) {
+        return null;
     }
 }

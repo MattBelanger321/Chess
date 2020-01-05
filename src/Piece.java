@@ -5,8 +5,10 @@ public abstract class Piece {
     protected BufferedImage icon;
     protected String name;
     protected boolean isWhite;
-    protected abstract void showMoves();
     protected boolean isTemp;
+    protected int i,j;  //array coordiates of this piece
+
+    protected abstract Square[] showMoves(Square[][] squares);
 
     public String toString(){
         return String.format("%s %s", isWhite?"WHITE":"BLACK",name);
