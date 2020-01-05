@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 public abstract class Piece {
     protected String pos;
@@ -8,7 +9,7 @@ public abstract class Piece {
     protected boolean isTemp;
     protected int i,j;  //array coordiates of this piece
 
-    protected abstract Square[] showMoves(Square[][] squares);
+    protected abstract LinkedList<Square> showMoves(Square[][] squares);
 
     public String toString(){
         return String.format("%s %s", isWhite?"WHITE":"BLACK",name);
@@ -24,6 +25,15 @@ public abstract class Piece {
 
     public boolean getColor(){
         return isWhite;
+    }
+
+    public void setPosition(String position){
+        pos = position;
+    }
+
+    public void setCoors(int i,int j){
+        this.i = i;
+        this.j = j;
     }
 
 }

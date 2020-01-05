@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 public class Game implements ActionListener,Global {
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
@@ -42,8 +43,8 @@ public class Game implements ActionListener,Global {
     public void makeMove(){
         boolean moveMade = false;
         while(!moveMade){
-            menu.setText(menu.getText());
-            if(state == WHITE_PLAY){
+            menu.setText(menu.getText());   //FIX A THREADING ISSUE
+            if(state == WHITE_PLAY){    //WHITES TURN
                 if(active != null){
                     if((active.getState() == null) || !active.getState().getColor()){ //NO PIECE FOUND OR COLOR MISMATCH
                         menu.setText("PLEASE SELECT A VALID PIECE");
@@ -53,15 +54,20 @@ public class Game implements ActionListener,Global {
                         if(active!=null){
                             Square temp = active;
                             while(true){
-                                if(!active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
+                                menu.setText(menu.getText());   //FIX THREADING ISSUE
+                                if(active!=null && !active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
+                                    if(active.getState() != null){
+                                        active.removeIcon();
+                                        active.removeState();
+                                    }
                                     active.setState(temp.getState());
+                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
                                     squares[temp.i][temp.j].removeIcon();
                                     squares[temp.i][temp.j].removeState();
-                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
                                     moveMade = true;
                                     break;
-                                }else{
-                                    menu.setText("INVALID MOVE");
+                                }else if(active == null){
+                                    break;
                                 }
                             }
                         }
@@ -78,15 +84,20 @@ public class Game implements ActionListener,Global {
                         if(active!=null){
                             Square temp = active;
                             while(true){
-                                if(!active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
+                                menu.setText(menu.getText());   //FIX THREADING ISSUE
+                                if(active!=null && !active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
+                                    if(active.getState() != null){
+                                        active.removeIcon();
+                                        active.removeState();
+                                    }
                                     active.setState(temp.getState());
+                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
                                     squares[temp.i][temp.j].removeIcon();
                                     squares[temp.i][temp.j].removeState();
-                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
                                     moveMade = true;
                                     break;
-                                }else{
-                                    menu.setText("INVALID MOVE");
+                                }else if(active == null){
+                                    break;
                                 }
                             }
                         }
@@ -97,9 +108,9 @@ public class Game implements ActionListener,Global {
         }
     }
 
-    private boolean isValidMove(Square square,Square[] possibles){
-        for(int i = 0;i<possibles.length;i++){
-            if(square.equals(possibles[i]))
+    private boolean isValidMove(Square square, LinkedList<Square> possibles){
+        for(Square s: possibles){
+            if(square.equals(s))
                 return true;
         }
         return false;

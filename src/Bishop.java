@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Bishop extends Piece {
 
@@ -19,7 +20,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected Square[] showMoves(Square[][] squares) {
+    protected LinkedList<Square> showMoves(Square[][] squares) {
         return null;
     }
 }

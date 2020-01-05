@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Rook extends Piece{
     private boolean hasMoved;   //A FLAG USED TO SEE IF CASTLING IS POSSIBLE
@@ -21,7 +22,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    protected Square[] showMoves(Square[][] squares) {
+    protected LinkedList<Square> showMoves(Square[][] squares) {
         return null;
     }
 }

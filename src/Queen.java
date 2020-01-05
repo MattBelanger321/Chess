@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Queen extends Piece {
     public Queen(String pos, boolean isWhite,int i,int j){
@@ -18,7 +19,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected Square[] showMoves(Square[][] squares) {
+    protected LinkedList<Square> showMoves(Square[][] squares) {
         return null;
     }
 }

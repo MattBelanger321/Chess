@@ -50,8 +50,9 @@ public class Square extends JButton implements Global, ActionListener {
                 icon = new JLabel(piece.name);
                 add(icon);
             }
-            state = null;
         }
+        state.setPosition(toString());
+        state.setCoors(i,j);
     }
 
     public Piece getState(){
