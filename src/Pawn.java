@@ -6,6 +6,7 @@ import java.util.LinkedList;
 public class Pawn extends Piece{
     private final int INITI; //STARTING COORDINATES
     private final int INITJ;
+
     public Pawn(String pos, boolean isWhite,int i,int j){
         super.pos = pos;
         super.name = "PAWN";
@@ -26,29 +27,29 @@ public class Pawn extends Piece{
 
     @Override
     protected LinkedList<Square> showMoves(Square[][] squares) {
-        LinkedList<Square> moves = new LinkedList<Square>();
+        LinkedList<Square> moves = new LinkedList<>();
         try{
-            if(squares[i][j+(isWhite?-1:1)].getState() == null){
+            if(squares[i][j+(isWhite?-1:1)].getState() == null){    //MOVE FORWARD
                 squares[i][j+(isWhite?-1:1)].setColor(255,0,0);
                 moves.add(squares[i][j+(isWhite?-1:1)]);
             }
         }catch(ArrayIndexOutOfBoundsException ignored){ }
         try{
-            if(super.i == INITI && super.j == INITJ && squares[i][j+(isWhite?-2:2)].getState() == null){
+            if(super.i == INITI && super.j == INITJ && squares[i][j+(isWhite?-2:2)].getState() == null){    //MOVE TWICE FORWARD
                 squares[i][j+(isWhite?-2:2)].setColor(255,0,0);
                 moves.add(squares[i][j+(isWhite?-2:2)]);
             }
         }catch(ArrayIndexOutOfBoundsException ignored){ }
         try{
-            if(squares[i+1][j+(isWhite?-1:1)].getState() != null && squares[i+1][j+(isWhite?-1:1)].getState().getColor() != isWhite){
+            if(squares[i+1][j+(isWhite?-1:1)].getState() != null && squares[i+1][j+(isWhite?-1:1)].getState().getColor() != isWhite){   //ATTACK RIGHT
                 squares[i+1][j+(isWhite?-1:1)].setColor(255,0,0);
                 moves.add(squares[i+1][j+(isWhite?-1:1)]);
             }
         }catch(ArrayIndexOutOfBoundsException ignored){ }
          try{
-            if(squares[i-1][j+(isWhite?-1:1)].getState() != null && squares[i-1][j+(isWhite?-1:1)].getState().getColor() != isWhite){
-                squares[i+1][j+(isWhite?-1:1)].setColor(255,0,0);
-                moves.add(squares[i+1][j+(isWhite?-1:1)]);
+            if(squares[i-1][j+(isWhite?-1:1)].getState() != null && squares[i-1][j+(isWhite?-1:1)].getState().getColor() != isWhite){   //ATTACK LEFT
+                squares[i-1][j+(isWhite?-1:1)].setColor(255,0,0);
+                moves.add(squares[i-1][j+(isWhite?-1:1)]);
             }
         }catch(ArrayIndexOutOfBoundsException ignored){ }
         return moves;
