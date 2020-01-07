@@ -249,6 +249,7 @@ public class Game implements ActionListener,Global {
         if(active != null){
             active.deactivate();
         }
+        menu.setText(menu.getText());
         active = null;
     }
 }//class
