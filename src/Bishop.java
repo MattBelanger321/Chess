@@ -22,6 +22,7 @@ public class Bishop extends Piece {
     @Override
     protected LinkedList<Square> showMoves(Square[][] squares) {
         LinkedList<Square> moves = new LinkedList<>();
+
         try{
             for(int a = 1; a<8; a++){   //DOWN RIGHT
                 if(squares[i+a][j+a].getState() == null){

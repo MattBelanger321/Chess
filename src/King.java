@@ -23,6 +23,66 @@ public class King extends Piece{
 
     @Override
     protected LinkedList<Square> showMoves(Square[][] squares) {
-        return null;
+        LinkedList<Square> moves = new LinkedList<>();
+
+        try{
+            if(squares[i][j+1].getState() == null || squares[i][j+1].getState().getColor() != getColor() ){    //MOVE DOWN
+                squares[i][j+1].setColor(255,0,0);
+                moves.add(squares[i][j+1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i][j-1].getState() == null || squares[i][j-1].getState().getColor() != getColor() ){    //MOVE UP
+                squares[i][j-1].setColor(255,0,0);
+                moves.add(squares[i][j-1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i+1][j].getState() == null || squares[i+1][j].getState().getColor() != getColor() ){    //MOVE RIGHT
+                squares[i+1][j].setColor(255,0,0);
+                moves.add(squares[i+1][j]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i-1][j].getState() == null || squares[i-1][j].getState().getColor() != getColor() ){    //MOVE LEFT
+                squares[i-1][j].setColor(255,0,0);
+                moves.add(squares[i-1][j]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i-1][j-1].getState() == null || squares[i-1][j-1].getState().getColor() != getColor() ){    //LEFT UP
+                squares[i-1][j-1].setColor(255,0,0);
+                moves.add(squares[i-1][j-1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i-1][j+1].getState() == null || squares[i-1][j+1].getState().getColor() != getColor() ){    //LEFT DOWN
+                squares[i-1][j+1].setColor(255,0,0);
+                moves.add(squares[i-1][j+1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i+1][j+1].getState() == null || squares[i+1][j+1].getState().getColor() != getColor() ){    //RIGHT DOWN
+                squares[i+1][j+1].setColor(255,0,0);
+                moves.add(squares[i+1][j+1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        try{
+            if(squares[i+1][j-1].getState() == null || squares[i+1][j-1].getState().getColor() != getColor() ){    //RIGHT UP
+                squares[i+1][j-1].setColor(255,0,0);
+                moves.add(squares[i+1][j-1]);
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){ }
+
+        //TO DO: CASTLING
+
+        return moves;
     }
 }
