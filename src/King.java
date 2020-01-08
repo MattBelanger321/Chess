@@ -97,6 +97,33 @@ public class King extends Piece{
     }
 
     private boolean rookChecked(Square[][] squares){
+        try{
+            for(int a = 1;a<8;a++){
+                if(squares[i][j+a].getState() != null && squares[i][j+a].getState().getColor() != isWhite && squares[i][j+a].getState().getName().equals("ROOK")){return true;}
+                if(squares[i][j+a].getState() != null && (squares[i][j+a].getState().getColor() == isWhite || !squares[i][j+a].getState().getName().equals("ROOK"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i][j-a].getState() != null && squares[i][j-a].getState().getColor() != isWhite && squares[i][j-a].getState().getName().equals("ROOK")){return true;}
+                if(squares[i][j-a].getState() != null && (squares[i][j-a].getState().getColor() == isWhite || !squares[i][j-a].getState().getName().equals("ROOK"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i+a][j].getState() != null && squares[i+a][j].getState().getColor() != isWhite && squares[i+a][j].getState().getName().equals("ROOK")){return true;}
+                if(squares[i+a][j].getState() != null && (squares[i+a][j].getState().getColor() == isWhite || !squares[i+a][j].getState().getName().equals("ROOK"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a=1;a<8;a++){
+                if(squares[i-a][j].getState() != null && squares[i-a][j].getState().getColor() != isWhite && squares[i-a][j].getState().getName().equals("ROOK")){return true;}
+                if(squares[i-a][j].getState() != null && (squares[i-a][j].getState().getColor() == isWhite || !squares[i-a][j].getState().getName().equals("ROOK"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
         return false;
     }
 
@@ -105,10 +132,92 @@ public class King extends Piece{
     }
 
     private boolean bishopChecked(Square[][] squares){
+        try{
+            for(int a = 1;a<8;a++){
+                if(squares[i+a][j+a].getState() != null && squares[i+a][j+a].getState().getColor() != isWhite && squares[i+a][j+a].getState().getName().equals("BISHOP")){return true;}
+                if(squares[i+a][j+a].getState() != null && (squares[i+a][j+a].getState().getColor() == isWhite || !squares[i+a][j+a].getState().getName().equals("BISHOP"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i+a][j-a].getState() != null && squares[i+a][j-a].getState().getColor() != isWhite && squares[i+a][j-a].getState().getName().equals("BISHOP")){return true;}
+                if(squares[i+a][j-a].getState() != null && (squares[i+a][j-a].getState().getColor() == isWhite || !squares[i+a][j-a].getState().getName().equals("BISHOP"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i-a][j+a].getState() != null && squares[i-a][j+a].getState().getColor() != isWhite && squares[i-a][j+a].getState().getName().equals("BISHOP")){return true;}
+                if(squares[i-a][j+a].getState() != null && (squares[i-a][j+a].getState().getColor() == isWhite || !squares[i-a][j+a].getState().getName().equals("BISHOP"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a=1;a<8;a++){
+                if(squares[i-a][j-a].getState() != null && squares[i-a][j-a].getState().getColor() != isWhite && squares[i-a][j-a].getState().getName().equals("BISHOP")){return true;}
+                if(squares[i-a][j-a].getState() != null && (squares[i-a][j-a].getState().getColor() == isWhite || !squares[i-a][j-a].getState().getName().equals("BISHOP"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
         return false;
     }
 
     private boolean queenChecked(Square[][] squares){
+        try{
+            for(int a = 1;a<8;a++){
+                if(squares[i+a][j+a].getState() != null && squares[i+a][j+a].getState().getColor() != isWhite && squares[i+a][j+a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i+a][j+a].getState() != null && (squares[i+a][j+a].getState().getColor() == isWhite || !squares[i+a][j+a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i+a][j-a].getState() != null && squares[i+a][j-a].getState().getColor() != isWhite && squares[i+a][j-a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i+a][j-a].getState() != null && (squares[i+a][j-a].getState().getColor() == isWhite || !squares[i+a][j-a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i-a][j+a].getState() != null && squares[i-a][j+a].getState().getColor() != isWhite && squares[i-a][j+a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i-a][j+a].getState() != null && (squares[i-a][j+a].getState().getColor() == isWhite || !squares[i-a][j+a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a=1;a<8;a++){
+                if(squares[i-a][j-a].getState() != null && squares[i-a][j-a].getState().getColor() != isWhite && squares[i-a][j-a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i-a][j-a].getState() != null && (squares[i-a][j-a].getState().getColor() == isWhite || !squares[i-a][j-a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++){
+                if(squares[i][j+a].getState() != null && squares[i][j+a].getState().getColor() != isWhite && squares[i][j+a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i][j+a].getState() != null && (squares[i][j+a].getState().getColor() == isWhite || !squares[i][j+a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i][j-a].getState() != null && squares[i][j-a].getState().getColor() != isWhite && squares[i][j-a].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i][j-a].getState() != null && (squares[i][j-a].getState().getColor() == isWhite || !squares[i][j-a].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a = 1;a<8;a++ ){
+                if(squares[i+a][j].getState() != null && squares[i+a][j].getState().getColor() != isWhite && squares[i+a][j].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i+a][j].getState() != null && (squares[i+a][j].getState().getColor() == isWhite || !squares[i+a][j].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            for(int a=1;a<8;a++){
+                if(squares[i-a][j].getState() != null && squares[i-a][j].getState().getColor() != isWhite && squares[i-a][j].getState().getName().equals("QUEEN")){return true;}
+                if(squares[i-a][j].getState() != null && (squares[i-a][j].getState().getColor() == isWhite || !squares[i-a][j].getState().getName().equals("QUEEN"))){break;}
+            }
+        }catch(ArrayIndexOutOfBoundsException ignored){}
         return false;
     }
 
@@ -117,8 +226,13 @@ public class King extends Piece{
     }
 
     private boolean pawnChecked(Square[][] squares){
-        if(squares[i+1][j+(isWhite?-1:1)].getState() !=null && squares[i+1][j+(isWhite?-1:1)].getState().getColor() != isWhite){return true;}
-        if(squares[i-1][j+(isWhite?-1:1)].getState() !=null && squares[i-1][j+(isWhite?-1:1)].getState().getColor() != isWhite){return true;}
+        try{
+            if(squares[i+1][j+(isWhite?-1:1)].getState() !=null && squares[i+1][j+(isWhite?-1:1)].getState().getColor() != isWhite && squares[i+1][j+(isWhite?-1:1)].getState().getName().equals("PAWN")){return true;}
+        }catch(ArrayIndexOutOfBoundsException ignored){}
+
+        try{
+            if(squares[i-1][j+(isWhite?-1:1)].getState() !=null && squares[i-1][j+(isWhite?-1:1)].getState().getColor() != isWhite && squares[i-1][j+(isWhite?-1:1)].getState().getName().equals("PAWN")){return true;}
+        }catch(ArrayIndexOutOfBoundsException ignored){}
 
         return false;
     }

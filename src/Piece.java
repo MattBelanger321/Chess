@@ -32,6 +32,8 @@ public abstract class Piece implements Global{
         pos = position;
     }
 
+    public String getName(){return name;}
+
     public void setCoors(int i,int j){
         this.i = i;
         this.j = j;
