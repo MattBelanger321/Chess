@@ -2,4 +2,4 @@
 WORK IN PROGRESS
 A Chess Java App
 
-PLEASE PLAY SLOWLY FOR BEST RESULTS
+sometimes your move is not regstered just try again
