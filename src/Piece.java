@@ -1,13 +1,14 @@
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-public abstract class Piece {
+public abstract class Piece implements Global{
     protected String pos;
     protected BufferedImage icon;
     protected String name;
     protected boolean isWhite;
     protected boolean isTemp;
     protected int i,j;  //array coordiates of this piece
+    protected boolean pinnedKing = false;
 
     protected abstract LinkedList<Square> showMoves(Square[][] squares);
 
@@ -35,5 +36,4 @@ public abstract class Piece {
         this.i = i;
         this.j = j;
     }
-
 }

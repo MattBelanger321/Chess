@@ -8,7 +8,8 @@ public class Game implements ActionListener,Global {
     private Piece[] whites = new Piece[16]; // WHITE PLAYER PIECES
     private Piece[] blacks = new Piece[16]; // BLACK PLAYERS PIECES
     private Square[][] squares = new Square[8][8]; //GAME BOARD
-    private int state = PRE_GAME;  //HOLDS BOARD STATE
+    private int state = REGULAR_PLAY;  //HOLDS BOARD STATE
+    private int turn;   //HOLDS WHO'S TURN IT IS
     private Square active = null;
 
     public Game(){
@@ -26,14 +27,14 @@ public class Game implements ActionListener,Global {
     }//Constructor
 
     public void play() {
-        for(int i = 0;state<3;i++){
+        for(int i = 0;getState()<3;i++){
             if(i%2==0){
                 menu.setText("WHITE PLAYER'S TURN!\nPLEASE SELECT A PIECE ");
-                setState(WHITE_PLAY);
+                setTurn(WHITE_PLAY);
                 makeMove();
             }else{
                 menu.setText("BLACK PLAYER'S TURN!\nPLEASE SELECT A PIECE ");
-                setState(BLACK_PLAY);
+                setTurn(BLACK_PLAY);
                 makeMove();
             }
             resetBoard();
@@ -44,73 +45,44 @@ public class Game implements ActionListener,Global {
         boolean moveMade = false;
         while(!moveMade){
             menu.setText(menu.getText());   //FIX A THREADING ISSUE
-            if(state == WHITE_PLAY){    //WHITES TURN
-                if(active != null){
-                    if((active.getState() == null) || !active.getState().getColor()){ //NO PIECE FOUND OR COLOR MISMATCH
-                        menu.setText("PLEASE SELECT A VALID PIECE");
-                    }else{
-                        menu.setText("YOU SELECTED A VALID PIECE");
-                        active.getState().showMoves(squares);
-                        if(active!=null){
-                            Square temp = active;
-                            while(true){
-                                menu.setText(menu.getText());   //FIX THREADING ISSUE
-                                if(active!=null && !active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
-                                    if(active.getState() != null){
-                                        active.removeIcon();
-                                        active.removeState();
-                                    }
-                                    active.setState(temp.getState());
-                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
-                                    squares[temp.i][temp.j].removeIcon();
-                                    squares[temp.i][temp.j].removeState();
-                                    moveMade = true;
-                                    break;
-                                }else if(active == null){
-                                    break;
+            if(active != null){
+                if((active.getState() == null) || ((WHITE_PLAY == turn) != active.getState().getColor())){ //NO PIECE FOUND OR COLOR MISMATCH
+                    menu.setText("PLEASE SELECT A VALID PIECE");
+                }else{
+                    menu.setText("YOU SELECTED A VALID PIECE");
+                    active.getState().showMoves(squares);
+                    if(active!=null){
+                        Square temp = active;
+                        while(true){
+                            menu.setText(menu.getText());   //FIX THREADING ISSUE
+                            if(active!=null && !active.equals(temp) && isValidMove(temp.getState().showMoves(squares))){
+                                if(active.getState() != null){
+                                    active.removeIcon();
+                                    active.removeState();
                                 }
+                                active.setState(temp.getState());
+                                temp.getState().setPosition(temp.toString());
+                                checkState((King) (turn!=WHITE_PLAY?whites[12]:blacks[12]));
+                                menu.setText(String.format("You moved %s to %s",temp.getState(),active));
+                                squares[temp.i][temp.j].removeIcon();
+                                squares[temp.i][temp.j].removeState();
+                                moveMade = true;
+                                break;
+                            }else if(active == null){
+                                break;
                             }
                         }
-                        resetBoard();
                     }
-                }
-            }else if(state == BLACK_PLAY){
-                if(active != null){
-                    if((active.getState() == null) || active.getState().getColor()){ //NO PIECE FOUND OR COLOR MISMATCH
-                        menu.setText("PLEASE SELECT A VALID PIECE");
-                    }else{
-                        menu.setText("YOU SELECTED A VALID PIECE");
-                        active.getState().showMoves(squares);
-                        if(active!=null){
-                            Square temp = active;
-                            while(true){
-                                menu.setText(menu.getText());   //FIX THREADING ISSUE
-                                if(active!=null && !active.equals(temp) && isValidMove(active,temp.getState().showMoves(squares))){
-                                    if(active.getState() != null){
-                                        active.removeIcon();
-                                        active.removeState();
-                                    }
-                                    active.setState(temp.getState());
-                                    menu.setText(String.format("You moved %s to %s",temp.getState(),active));
-                                    squares[temp.i][temp.j].removeIcon();
-                                    squares[temp.i][temp.j].removeState();
-                                    moveMade = true;
-                                    break;
-                                }else if(active == null){
-                                    break;
-                                }
-                            }
-                        }
-                        resetBoard();
-                    }
+                    resetBoard();
                 }
             }
         }
     }
 
-    private boolean isValidMove(Square square, LinkedList<Square> possibles){
+    //THIS METHOD WILL CHECK IF THE ATTEMPTED MOVE IS VALID
+    private boolean isValidMove(LinkedList<Square> possibles){
         for(Square s: possibles){
-            if(square.equals(s))
+            if(active.equals(s))
                 return true;
         }
         return false;
@@ -131,6 +103,7 @@ public class Game implements ActionListener,Global {
         placePieces();
     }
 
+    //THIS METHOD WILL CREATE AND DISPLAY THE SIDEBAR
     private void createSideBar(){
         //OK BUTTON
         JButton ok = new JButton("OK");
@@ -145,6 +118,7 @@ public class Game implements ActionListener,Global {
         main.add(menu);
     }//sidebar
 
+    //THIS METHOD IS USED TO PLACE THE PIECES ON THE BOARD
     private void placePieces(){
         //PAWNS
 
@@ -202,10 +176,23 @@ public class Game implements ActionListener,Global {
         }
     }   //placePiece
 
+    private void checkState(King king){
+        if(king.isChecked(squares)){
+            state = (turn == WHITE_PLAY ? BLACK_CHECK : WHITE_CHECK);
+        }else{
+            state = state;
+        }
+    }
+
     public void setState(int newState){
         state = newState;
     }
 
+    public void setTurn(int turn){
+        this.turn = turn;
+    }
+
+    //THIS METHOD STOPS THE PROGRAM UNTIL THE USER HITS OK
     public void waitOK(){
         while(!menu.getText().equals("")){
             if(menu.getText().equals("")){

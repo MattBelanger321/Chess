@@ -85,4 +85,41 @@ public class King extends Piece{
 
         return moves;
     }
+
+    public boolean isChecked(Square[][] squares){
+        if(pawnChecked(squares)){return true;}
+        if(rookChecked(squares)){return true;}
+        if(knightChecked(squares)){return true;}
+        if(bishopChecked(squares)){return true;}
+        if(queenChecked(squares)){return true;}
+        if(kingChecked(squares)){return true;}
+        return false;
+    }
+
+    private boolean rookChecked(Square[][] squares){
+        return false;
+    }
+
+    private boolean knightChecked(Square[][] squares){
+        return false;
+    }
+
+    private boolean bishopChecked(Square[][] squares){
+        return false;
+    }
+
+    private boolean queenChecked(Square[][] squares){
+        return false;
+    }
+
+    private boolean kingChecked(Square[][] squares){
+        return false;
+    }
+
+    private boolean pawnChecked(Square[][] squares){
+        if(squares[i+1][j+(isWhite?-1:1)].getState() !=null && squares[i+1][j+(isWhite?-1:1)].getState().getColor() != isWhite){return true;}
+        if(squares[i-1][j+(isWhite?-1:1)].getState() !=null && squares[i-1][j+(isWhite?-1:1)].getState().getColor() != isWhite){return true;}
+
+        return false;
+    }
 }

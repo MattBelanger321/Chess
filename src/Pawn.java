@@ -52,6 +52,7 @@ public class Pawn extends Piece{
                 moves.add(squares[i-1][j+(isWhite?-1:1)]);
             }
         }catch(ArrayIndexOutOfBoundsException ignored){ }
+
         return moves;
     }
 }
